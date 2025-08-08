@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EB-1 Кейсы: Анализ Успешных Петиций</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #9b59b6, #e74c3c, #f39c12);
+        }
+        
+        .title-slide {
+            text-align: center;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 60px 40px;
+        }
+        
+        .title-slide h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+        
+        .title-slide p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        .section-icon {
+            font-size: 1.2em;
+            margin-right: 15px;
+        }
+        
+        .case-grid {
+            display: grid;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .case-card {
+            background: linear-gradient(135deg, #f8f9ff, #e8f4fd);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 5px solid;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .case-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .arts { border-left-color: #e74c3c; }
+        .entrepreneur { border-left-color: #f39c12; }
+        .it { border-left-color: #27ae60; }
+        
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        
+        .case-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            flex: 1;
+        }
+        
+        .case-field {
+            background: rgba(52,152,219,0.1);
+            color: #2980b9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .criteria-list {
+            margin: 15px 0;
+        }
+        
+        .criteria-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .criteria-list li {
+            padding: 3px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .criteria-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .problem-section, .solution-section {
+            margin: 15px 0;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .problem-section {
+            background: rgba(231,76,60,0.08);
+            border-left: 3px solid #e74c3c;
+        }
+        
+        .solution-section {
+            background: rgba(39,174,96,0.08);
+            border-left: 3px solid #27ae60;
+        }
+        
+        .section-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+        }
+        
+        .problem-section .section-label {
+            color: #c0392b;
+        }
+        
+        .solution-section .section-label {
+            color: #229954;
+        }
+        
+        .section-text {
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .result {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1em;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .approved {
+            background: rgba(39,174,96,0.15);
+            color: #27ae60;
+        }
+        
+        .result-icon {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        .summary-slide {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            text-align: center;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .summary-card {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .summary-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+        
+        .summary-text {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .patterns-list {
+            text-align: left;
+            margin-top: 40px;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .patterns-list h3 {
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        
+        .patterns-list ul {
+            list-style: none;
+        }
+        
+        .patterns-list li {
+            padding: 8px 0;
+            padding-left: 35px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        
+        .patterns-list li::before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+            font-size: 1.3em;
+        }
+        
+        @media (max-width: 768px) {
+            .presentation-container {
+                padding: 10px;
+            }
+            
+            .slide {
+                padding: 25px;
+                margin-bottom: 20px;
+            }
+            
+            .title-slide h1 {
+                font-size: 2.5em;
+            }
+            
+            .section-title {
+                font-size: 2em;
+            }
+            
+            .case-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Title Slide -->
+        <div class="slide title-slide">
+            <h1>EB-1 КЕЙСЫ</h1>
+            <p>Анализ успешных петиций: проблемы, решения, результаты</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div>Кейсов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div>Сферы</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div>Успех</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Creative Arts Section -->
+        <div class="slide">
+            <h2 class="section-title">
+                <span class="section-icon">🎭</span>
+                CREATIVE ARTS - 3 кейса
+            </h2>
+            
+            <div class="case-grid">
+                <div class="case-card arts">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #1: Модный дизайнер</div>
+                        <div class="case-field">Fashion Design</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии:</strong>
+                        <ul>
+                            <li>Публикации в медиа (RG.ru, Pravda.ru, OK! Magazine)</li>
+                            <li>Ведущая роль (собственный бренд Diana Kvariani, посол IED Rome)</li>
+                            <li>Оригинальный вклад (bold fusion стиль в грузинской моде)</li>
+                            <li>Выставки (Mercedes-Benz Fashion Week, White Milano)</li>
+                            <li>Членство в ассоциациях (MOASD)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Проблема</div>
+                        <div class="section-text">Очень сложно собирать документы - ничего не записывала, вела бизнес почти без документов, не было планов в США</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Решение</div>
+                        <div class="section-text">Организовали письма о намерениях через наших клиентов</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result-icon">✅</span>
+                        Одобрение с дозапросом одной формы по EB-2 NIW
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Slide -->
+        <div class="slide summary-slide">
+            <h2 style="margin-bottom: 30px; font-size: 2.5em;">Выводы и паттерны успеха</h2>
+            
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-number">70%</div>
+                    <div class="summary-text">Одобрений без дозапроса</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">30%</div>
+                    <div class="summary-text">С дозапросом, но успешно</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">100%</div>
+                    <div class="summary-text">Итоговый успех</div>
+                </div>
+            </div>
+            
+            <div class="patterns-list">
+                <h3>🔑 Ключевые паттерны успеха</h3>
+                <ul>
+                    <li><strong>Документооборот решает всё:</strong> Проблемы с документами - основная причина сложностей</li>
+                    <li><strong>Пиар важен:</strong> В 3 случаях дополнительный пиар спас ситуацию</li>
+                    <li><strong>Секретность = сложности:</strong> Работа в крупных компаниях создает проблемы с документами</li>
+                    <li><strong>Структура материала критична:</strong> "Накидать всего" = отказ</li>
+                    <li><strong>EB-1 vs EB-2:</strong> Иногда смена категории - ключ к успеху</li>
+                    <li><strong>Дозапросы не страшны:</strong> 30% случаев прошли с дозапросами</li>
+                    <li><strong>Бизнес через супругов:</strong> Можно решить через дозапрос</li>
+                    <li><strong>Повторные подачи работают:</strong> После отказа усиление помогло</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>-icon">✅</span>
+                        Одобрение с дозапросом по 4 критериям
+                    </div>
+                </div>
+                
+                <div class="case-card arts">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #2: Стендап комик</div>
+                        <div class="case-field">Stand-up Comedy</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии:</strong>
+                        <ul>
+                            <li>Публикации (Forbes.ru, Channel One, VDud 10.3M подписчиков)</li>
+                            <li>Выставки (14+ европейских городов, платформа SpecialsComedy)</li>
+                            <li>Коммерческий успех (48,600+ билетов, $106,000+ доход)</li>
+                            <li>Ведущая роль (продюсер "22 Comedians", хост YouTube шоу)</li>
+                            <li>Оригинальный вклад (новая модель монетизации)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Проблема</div>
+                        <div class="section-text">Много чувствительной информации о сотрудничестве, материал пришлось обезличивать</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Решение</div>
+                        <div class="section-text">Получилось обойтись без чувствительной информации</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result-icon">✅</span>
+                        Одобрение без дозапроса
+                    </div>
+                </div>
+                
+                <div class="case-card arts">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #3: Motion Designer</div>
+                        <div class="case-field">Creative Director</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии:</strong>
+                        <ul>
+                            <li>Награды (AICP, Promax BDA, Red Dot, Clio Awards)</li>
+                            <li>Оригинальный вклад (Nike Invincible 3, PlayStation 5, Viking VFX)</li>
+                            <li>Выставки (World Expo Dubai, Times Square, TED Conferences)</li>
+                            <li>Судейство (Motion Awards 2016-2020)</li>
+                            <li>Ведущая роль (основатель Media.Work, арт-директор NTV)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Проблема</div>
+                        <div class="section-text">Был отказ по EB-1 с другой фирмой - не приняли ни один критерий, накидали материал без структуры</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Решение</div>
+                        <div class="section-text">Проанализировали предыдущую заявку, структурировали материал для офицера</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result-icon">✅</span>
+                        Одобрение с дозапросом по всем критериям
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Entrepreneurship Section -->
+        <div class="slide">
+            <h2 class="section-title">
+                <span class="section-icon">💼</span>
+                ENTREPRENEURSHIP - 3 кейса
+            </h2>
+            
+            <div class="case-grid">
+                <div class="case-card entrepreneur">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #4: Workforce Development</div>
+                        <div class="case-field">Развитие кадров</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии:</strong>
+                        <ul>
+                            <li>Публикации (Komsomolskaya Pravda, Business Magazine)</li>
+                            <li>Ведущая роль (основатель MITI, партнер Siemens/ABB/FANUC)</li>
+                            <li>Судейство (All-Russian Entrepreneur, Business Leaders Central Asia)</li>
+                            <li>Оригинальный вклад (методология обучения, патент на мобильный стенд)</li>
+                            <li>Научные статьи (Current Research, Applied Economic Research)</li>
+                            <li>Высокая зарплата ($1,435,892 в 2023, в 12 раз выше среднего)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Проблема</div>
+                        <div class="section-text">Изначально пришел подаваться на EB-2 NIW с дипломом социолога, получили отказ</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Решение</div>
+                        <div class="section-text">Переубедили подаваться на EB-1, сделали дополнительный пиар для усиления профиля</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result-icon">✅</span>
+                        Одобрение без дозапроса
+                    </div>
+                </div>
+                
+                <div class="case-card entrepreneur">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #5: Финансы и инвестиции</div>
+                        <div class="case-field">Investment Analysis</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии:</strong>
+                        <ul>
+                            <li>Награды (Innovation Fund monetary prize)</li>
+                            <li>Членство в ассоциациях (Crypto consultants)</li>
+                            <li>Публикации (bankchart.kz, kommersant.ru, hightech.plus)</li>
+                            <li>Оригинальный вклад (BLABM и BABM методологии инвестирования)</li>
+                            <li>Научные статьи (RSDN Magazine)</li>
+                            <li>Ведущая роль (City of Investors, Territory of Investment)</li>
+                            <li>Высокая зарплата ($236,801 в 2022)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Проблема</div>
+                        <div class="section-text">Стандартная подача без особых проблем</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Решение</div>
+                        <div class="section-text">Стандартная подготовка документов</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result-icon">✅</span>
+                        Одобрение с дозапросом по всем критериям
+                    </div>
+                </div>
+                
+                <div class="case-card entrepreneur">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #6: IT предприниматель</div>
+                        <div class="case-field">IT Entrepreneurship</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии:</strong>
+                        <ul>
+                            <li>Оригинальный вклад (GIS "Geoproject", SEOSPRINT платформа)</li>
+                            <li>Ведущая роль (SEOSPRINT, MIRWORK LLC, основатель компаний)</li>
+                            <li>Членство (IEEE Senior Member, ISA)</li>
+                            <li>Научные статьи (Universum: Technical Sciences, IJSES)</li>
+                            <li>Награды (Cases&Faces 2024 Executive of the Year)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Проблема</div>
+                        <div class="section-text">Бизнес был оформлен на жену, приходилось доказывать что всем управляет он</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Решение</div>
+                        <div class="section-text">В дозапросе детально объяснили его управляющую роль, получилось отбиться</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result-icon">✅</span>
+                        Одобрение с дозапросом по двум критериям
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IT Section -->
+        <div class="slide">
+            <h2 class="section-title">
+                <span class="section-icon">💻</span>
+                INFORMATION TECHNOLOGY - 4 кейса
+            </h2>
+            
+            <div class="case-grid">
+                <div class="case-card it">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #7: CTO рекламных технологий</div>
+                        <div class="case-field">Advertising Technologies</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии:</strong>
+                        <ul>
+                            <li>Судейство (защита проектов МГТУ Баумана, HighLoad++ Award)</li>
+                            <li>Оригинальный вклад (Youla, VK Advertising платформа)</li>
+                            <li>Выставки (Backend Conf, HighLoad++, GDG конференции)</li>
+                            <li>Ведущая роль (VK Company, ведущий мобильный classified в России)</li>
+                            <li>Высокая зарплата ($357,135 в 2022)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Проблема</div>
+                        <div class="section-text">Готовился в секретности - работает в крупной компании, не хотел чтобы знали о планах ухода, практически нереально получить документы от коллег</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Решение</div>
+                        <div class="section-text">Пришел с двумя критериями (зарплата и роль), добивали профиль в течение 4 месяцев</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result-icon">✅</span>
+                        Одобрение без дозапроса
+                    </div>
+                </div>
+                
+                <div class="case-card it">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #8: Senior Software Engineer</div>
+                        <div class="case-field">Software Engineering</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии:</strong>
+                        <ul>
+                            <li>Ведущая роль (B2B-Center, Digitail - ключевые продукты)</li>
+                            <li>Судейство (Armenia Digital Awards)</li>
+                            <li>Высокая зарплата ($4,752/мес, в 2.5 раза выше среднего)</li>
+                            <li>Членство (IEEE Senior Member, Hackathon Raptors)</li>
+                            <li>Научные статьи (HackerNoon, DEV - 11 статей)</li>
+                            <li>Оригинальный вклад (B2B Altis проект, DDD методология)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Проблема</div>
+                        <div class="section-text">Пришел с двумя критериями (роль и зарплата), отказался от усиления, был уверен в заявке. Получили первый отказ по EB-1</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Решение</div>
+                        <div class="section-text">Сделали пиар и усиление профиля, подали повторно</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result-icon">✅</span>
+                        Одобрение без дозапроса после усиления
+                    </div>
+                </div>
+                
+                <div class="case-card it">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #9: Fintech Developer</div>
+                        <div class="case-field">Fintech Development</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии:</strong>
+                        <ul>
+                            <li>Публикации (Kommersant, Monocle, Hightech.plus, TAdviser)</li>
+                            <li>Научные статьи (Universum: Technical Sciences - Big Data fraud detection)</li>
+                            <li>Ведущая роль (Sberbank Platform V, Renaissance Credit Payment Engine)</li>
+                            <li>Награды (Digital Breakthrough 2022 AI Hackathon)</li>
+                            <li>Судейство (Digital Leaders Award 2023)</li>
+                            <li>Членство (Oracle, IEEE)</li>
+                            <li>Высокая зарплата (7.3M руб = $79,760 в 2023)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Проблема</div>
+                        <div class="section-text">Работает в большой компании, практически ноль материала получили. На консульском этапе попал на административную проверку</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Решение</div>
+                        <div class="section-text">Стандартная подготовка с ограниченными материалами</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result-icon">✅</span>
+                        Одобрение с административной проверкой
+                    </div>
+                </div>
+                
+                <div class="case-card it">
+                    <div class="case-header">
+                        <div class="case-title">Кейс #10: EB-2 NIW IT специалист</div>
+                        <div class="case-field">EB-2 National Interest</div>
+                    </div>
+                    
+                    <div class="criteria-list">
+                        <strong>Критерии EB-2 NIW:</strong>
+                        <ul>
+                            <li>Работа в найме заявлена как в национальном интересе</li>
+                            <li>Нестандартная подача через EB-2</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="problem-section">
+                        <div class="section-label">Особенность</div>
+                        <div class="section-text">Заявляли работу в найме через EB-2 NIW в национальном интересе</div>
+                    </div>
+                    
+                    <div class="solution-section">
+                        <div class="section-label">Результат</div>
+                        <div class="section-text">С удивлением прошел - в дозапросе попросили только одну форму</div>
+                    </div>
+                    
+                    <div class="result approved">
+                        <span class="result
